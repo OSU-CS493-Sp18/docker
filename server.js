@@ -115,28 +115,11 @@ app.delete('/lodgings/:lodgingID', function (req, res, next) {
 });
 
 app.get('/users/:userID/lodgings', function (req, res, next) {
-
   const ownerID = parseInt(req.params.userID);
-  const ownerLodgings = [];
-  lodgings.forEach((lodging) => {
-    /*
-     * If lodging's owner matches ownerID, add lodging to array of user's
-     * lodgings.  Use Object.assign() to add a links field to the lodging
-     * object containing HATEOAS links.
-     */
-    if (lodging.ownerID === ownerID) {
-      ownerLodgings.push(Object.assign(lodging, {
-        links: {
-          lodging: '/lodgings/' + lodging.id
-        }
-      }));
-    }
-  });
-
+  const ownerLodgings = lodgings.filter(lodging => lodging.ownerID === ownerID);
   res.status(200).json({
     lodgings: ownerLodgings
   });
-
 });
 
 app.use('*', function (req, res, next) {
