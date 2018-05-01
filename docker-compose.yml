@@ -12,9 +12,6 @@ services:
       RELAY_PORT: 8000
     ports:
       - "8001:8001"
-    volumes:
 
   mysql:
     image: mysql
-
-volumes:
